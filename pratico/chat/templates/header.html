@@ -1,0 +1,13 @@
+{% load static %}
+<header class="header d-flex mb-4">
+    <img alt="Logo do Pratico" src="{% static 'imgs/icone_pratico.png' %}" class="mt-4" width="100">
+    <div class="d-flex flex-fill flex-column align-self-center">
+        <div class="align-self-center">
+            <b class="fs-1">Pratico</b>
+        </div>
+    </div>
+    <div class="d-flex align-items-center me-5">
+        <a href="{% url 'index' %}" class="btn btn-dark"><p class="fs-5 m-0">Início</p></a>
+    </div>
+</header>
+<hr>
