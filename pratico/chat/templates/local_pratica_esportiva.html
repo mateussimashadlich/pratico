@@ -29,7 +29,7 @@
       {% for esporte in local_pratica_esportiva.esportes.all %}        
         <div id="{{esporte.nome}}"class="col">
             <div class="card">                            
-                <div class="card-body d-flex justify-content-center" style="cursor: pointer; cursor: hand;" onclick="window.location=`{% url 'chat' local_pratica_esportiva.id esporte.id %}`">                  
+                <div class="card-body d-flex justify-content-center" style="cursor: pointer; cursor: hand;" onclick="window.location=`{% url 'forum' local_pratica_esportiva.id esporte.id %}`">                  
                     <h5 class="card-title fs-2">
                       {{esporte.nome}}
                     </h5>                        

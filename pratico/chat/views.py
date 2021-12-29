@@ -1,15 +1,18 @@
 import json
 import uuid
+
+from django.contrib.auth import authenticate, login
 from django.forms.models import model_to_dict
-from django.http.response import JsonResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.generic.base import View
 from django.views.generic.detail import DetailView
 from geopy import distance
-from gerenciamento.models import LocalPraticaEsportiva, Esporte
+from gerenciamento.models import Esporte, LocalPraticaEsportiva
+
 from .forms import UsuarioForm
-from django.contrib.auth import authenticate, login
+from .models import Mensagem
 
 
 def busca_locais(request):
@@ -49,13 +52,14 @@ class CadastroUsuarioView(View):
             return render(request, "usuario/cadastro.html", {"form_usuario": form_usuario})
 
 
-class ChatView(View):
+class ForumView(View):
     def get(self, request, *args, **kwargs):
         local = LocalPraticaEsportiva.objects.get(pk=kwargs['id_local'])
         esporte = Esporte.objects.get(pk=kwargs['id_esporte'])
 
-        return render(request, 'chatroom.html', {
-            'room_name': str(uuid.uuid4()),
+        return render(request, 'forum.html', {
+            'forum_name': str(uuid.uuid4()),
+            'posts': Mensagem.objects.all(),
             'nome_local': local.nome,
             'nome_esporte': esporte.nome,
             'id_local': kwargs['id_local'],
@@ -63,7 +67,12 @@ class ChatView(View):
         })
 
     def post(self, request, *args, **kwargs):
-        pass
+        dados_mensagem = json.loads(request.body)
+        mensagem = Mensagem(texto=dados_mensagem['texto'], local_pratica_esportiva=dados_mensagem['id_local'],
+                            esporte=dados_mensagem['id_esporte'], enviador=request.user)
+        mensagem.save()
+
+        return HttpResponse(status=200)
 
 
 class LocalPraticaEsportivaDetailView(DetailView):

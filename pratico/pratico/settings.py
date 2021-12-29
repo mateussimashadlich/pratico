@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'chat',
     'gerenciamento',
-    'channels'
 ]
 
 MIDDLEWARE = [
@@ -126,12 +125,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static/django'
-ASGI_APPLICATION = "pratico.routing.application"
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
-}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
