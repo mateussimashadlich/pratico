@@ -17,30 +17,39 @@
 
         <title>Pratico - Chat</title>
     </head>
+
     <body style="background-color: #f9f9f9">
+        {% include 'header.html' %}
         <div style="height: 95vh">
+            <h1 class="ms-5">{{nome_local}} - {{nome_esporte}}</h1>
             <div class="row h-100 d-flex align-items-end">
-                <div class="col-10 align-self-start ms-5 mt-4" id="posts_forum">
+                <div class="col-10 align-self-start ms-5 mb-0" id="posts_forum">
                     {% for post in posts %}
                     <div
-                        class="border border-2"
-                        style="background-color: white; min-height: 20ex"
+                        class="border border-2 mt-5"
+                        style="
+                            background-color: white;
+                            min-height: 10ex;
+                            max-width: 100ex;
+                        "
                     >
                         <pre class="bg-dark text-white fs-6">
-  {{post.enviador.username}} em {{post.data_envio}}</pre
+{{post.enviador.username}} às {{post.data_envio|date:'G'}}:{{post.data_envio|date:'i'}} de {{post.data_envio|date:'d'}}/{{post.data_envio|date:'m'}}</pre
                         >
-                        <p>{{post.texto}}</p>
+                        <p style="word-wrap: break-word" class="p-2">
+                            {{post.texto}}
+                        </p>
                     </div>
                     {% endfor %}
                 </div>
                 <div class="col-10 mt-5">
-                    <form class="ms-5" id="form_mensagem">
+                    <form class="ms-5" id="form_mensagem" method="POST">
                         <div class="form-group">
                             <textarea
                                 type="text"
                                 class="form-control"
                                 id="msg_text"
-                                rows="5"
+                                rows="3"
                                 placeholder="Poste uma mensagem para que os outros vejam"
                             ></textarea
                             ><br />
@@ -61,6 +70,28 @@
             crossorigin="anonymous"
         ></script>
         <script>
+            window.scrollTo(0, document.body.scrollHeight);
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== "") {
+                    const cookies = document.cookie.split(";");
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (
+                            cookie.substring(0, name.length + 1) ===
+                            name + "="
+                        ) {
+                            cookieValue = decodeURIComponent(
+                                cookie.substring(name.length + 1)
+                            );
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
             username = `{{user.username}}`;
             $("#form_mensagem").submit(function (e) {
                 e.preventDefault();
@@ -82,25 +113,29 @@
                         id_esporte: `{{id_esporte}}`,
                     }),
                     success: function (response) {
+                        console.log("blaaa");
                         var today = new Date();
                         var horario =
-                            today.getHours() +
-                            ":" +
-                            today.getMinutes() +
-                            ":" +
-                            today.getSeconds();
-                        var data = today.getDate() + "/" + today.getMonth() + 1;
+                            today.getHours() + ":" + today.getMinutes();
+                        var data = today.getDate() + "/" + today.getMonth();
                         post = $(`<div
-                        class="border border-2"
-                        style="background-color: white; min-height: 20ex"
+                        class="border border-2 mt-5"
+                        style="
+                            background-color: white;
+                            min-height: 10ex;
+                            max-width: 100ex;
+                        "
                     >
                         <pre class="bg-dark text-white fs-6"> ${username} às ${horario} de ${data}</pre>
-                        <p>${msg}</p>
+                        <p style="word-wrap: break-word" class="p-2">${msg}</p>
                       </div>`);
 
                         document
                             .getElementById("posts_forum")
                             .appendChild(post[0]);
+                    },
+                    error: function (response) {
+                        console.log("hahahaha");
                     },
                 });
             });

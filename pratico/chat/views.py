@@ -59,7 +59,7 @@ class ForumView(View):
 
         return render(request, 'forum.html', {
             'forum_name': str(uuid.uuid4()),
-            'posts': Mensagem.objects.all(),
+            'posts': Mensagem.objects.filter(local_pratica_esportiva=local, esporte=esporte),
             'nome_local': local.nome,
             'nome_esporte': esporte.nome,
             'id_local': kwargs['id_local'],
@@ -68,11 +68,14 @@ class ForumView(View):
 
     def post(self, request, *args, **kwargs):
         dados_mensagem = json.loads(request.body)
-        mensagem = Mensagem(texto=dados_mensagem['texto'], local_pratica_esportiva=dados_mensagem['id_local'],
-                            esporte=dados_mensagem['id_esporte'], enviador=request.user)
+        local_pratica_esportiva = LocalPraticaEsportiva.objects.get(
+            pk=dados_mensagem['id_local'])
+        esporte = Esporte.objects.get(pk=dados_mensagem['id_esporte'])
+        mensagem = Mensagem(texto=dados_mensagem['texto'], local_pratica_esportiva=local_pratica_esportiva,
+                            esporte=esporte, enviador=request.user)
         mensagem.save()
 
-        return HttpResponse(status=200)
+        return JsonResponse({'mensagem': 'Mensagem gravada com sucesso.'}, status=200)
 
 
 class LocalPraticaEsportivaDetailView(DetailView):
