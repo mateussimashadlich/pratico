@@ -47,7 +47,7 @@ class CadastroUsuarioView(View):
         if form_usuario.is_valid():
             user = form_usuario.save()
             login(request, user)
-            return redirect("locais_pratica_esportiva_list")
+            return redirect("index")
         else:
             return render(request, "usuario/cadastro.html", {"form_usuario": form_usuario})
 
