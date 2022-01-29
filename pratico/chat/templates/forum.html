@@ -114,10 +114,11 @@
                     }),
                     success: function (response) {
                         console.log("blaaa");
+                        document.getElementById("msg_text").value = "";
                         var today = new Date();
                         var horario =
                             today.getHours() + ":" + today.getMinutes();
-                        var data = today.getDate() + "/" + today.getMonth();
+                        var data = today.getDate() + "/" + today.getMonth() + 1;
                         post = $(`<div
                         class="border border-2 mt-5"
                         style="
