@@ -14,6 +14,7 @@ urlpatterns = [
     path('forum/',
          views.ForumView.as_view(), name='forum'),
     path('login', views.LoginUsuarioView.as_view(), name='login'),
+    path('logout', views.LogoutUsuarioView.as_view(), name='logout'),
     path('usuario/cadastro', views.CadastroUsuarioView.as_view(),
          name='cadastro_usuario'),
 ]

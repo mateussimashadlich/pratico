@@ -1,7 +1,7 @@
 import json
 import uuid
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.forms.models import model_to_dict
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
@@ -36,6 +36,12 @@ class LoginUsuarioView(View):
             return redirect("index")
         else:
             return render(request, "usuario/login.html", {'credenciais_invalidas': True})
+
+
+class LogoutUsuarioView(View):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('login')
 
 
 class CadastroUsuarioView(View):
