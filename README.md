@@ -6,7 +6,7 @@ A proposta do projeto é oferecer uma plataforma para o cadastro e busca de loca
 
 <h2>Instalação</h2>
 <p>Para executar o projeto, você precisará instalar na sua máquina o <a href="https://www.python.org/downloads/">Python</a></p>
-<p>Com o Python instalado, entre na pasta do projeto e utilize no seu terminal o comando a seguir para instalar as bibliotecas do projeto:</p>
+<p>Com o Python instalado, entre na pasta do projeto e utilize no seu terminal o comando a seguir para instalar os pacotes do projeto:</p>
 <p><code>pip install -r requirements.txt</code></p>
 
 <h2>Utilização</h2>
