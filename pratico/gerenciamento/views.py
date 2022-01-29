@@ -1,8 +1,6 @@
 from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls.base import reverse_lazy
-from geopy import distance
-from django.forms.models import model_to_dict
 from django.views import View
 from .forms import LocalPraticaEsportivaForm
 from .models import LocalPraticaEsportiva
